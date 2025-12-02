@@ -397,7 +397,10 @@ ________________________________________
 Go to instance → Click Connect → SSH tab
 Copy:
 ssh -i "your-key.pem" ubuntu@<your-public-ip>
-Paste into PowerShell.
+
+create a folder named aws and navigate to it 
+put ur pem file in aws
+Paste ur ssh into PowerShell.
 You are now inside your remote Ubuntu machine.
 ________________________________________
 ⭐ PART 3 — Install 
@@ -408,6 +411,18 @@ sudo apt install git
 sudo apt install nano
 ________________________________________
 Create a html file and push into git or what ever is given 
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>My Example Webserver</title>
+</head>
+<body>
+    <h1>Hello from EC2 + Docker!</h1>
+    <p>Hosted on nginx container.</p>
+</body>
+</html>
+
 ⭐ PART 4 — Clone your project
 git clone <your GitHub link>
 cd <project folder>
