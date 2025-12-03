@@ -452,3 +452,273 @@ Paste in browser → Your website appears 🎉
 ->Stopping 
 sudo docker ps -> gives container id 
 sudo docker stop <container id>
+---------------------------------------------------------------------------------------
+//WEBHOOKS
+
+in cmd type:
+ngrok.exe http 8080
+
+take the forwarding url from it
+
+1)Create the Jenkins job ->in the source code management select the git and enter git repo url and make sure the branch is same (*/main)
+
+2)In the triggers section select “Github hook trigger for GITScm polling”
+
+3)click on apply and save
+
+4)open the git hub repo open setting of repo and then go to webhooks
+
+5)Click on add a webhook and take the forwarding URL from ngrok and paste in payload URL and add /github-webhook/ along with the forwarding url
+Forwarding URL: https://corkier-darla-handsome.ngrok-free.dev
+Payload url: https://corkier-darla-handsome.ngrok-free.dev/github-webhook/
+
+6) make changes in the files in github
+7)click on commit changes
+automatically it will build itself
+
+
+
+
+
+
+//email notification
+open : https://myaccount.google.com/apppasswords =>generate password
+
+✅ Part 1 — Configure Email Notification in a Job
+Create a new job → choose Freestyle project
+Name the job
+Scroll to Post-build actions
+Enable Email Notification
+Add Recipient email (example: chandala.ruthwik@gmail.com)
+Save the job and build it
+
+✅ Part 2 — Global SMTP Configuration (Email Notification Heading)
+Manage Jenkins → System → Email Notification
+Open Manage Jenkins
+Open System
+Scroll to Email Notification section
+Fill these:
+SMTP Server:
+smtp.gmail.com
+Advanced:
+Username: your Gmail
+Password: 16-digit generated app password
+Use SSL: enabled
+SMTP Port:465
+Reply-To Address: your Gmail
+Test:
+Enter any valid recipient email
+Click Test configuration
+
+✅ Part 3 — Extended Email Notification Section
+Fill these:
+SMTP Server:smtp.gmail.com
+SMTP Port:465
+Use SSL: enabled
+Credentials:
+Add your Gmail + App Password (16-digit)
+Defaults:
+Default content type: text / html / leave default
+Default recipients: leave empty or add emails
+=>Triggers you can enable:
+Always
+Failure – Any
+Failure – X
+Status changed
+Success
+Test improvement
+Test regression
+Unstable (test failure)
+Failure → Success
+
+
+
+
+
+
+
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wp123
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_app
+    restart: always
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wp123
+      WORDPRESS_DB_NAME: wordpressdb
+    ports:
+      - "8080:80"
+    volumes:
+      - wp_data:/var/www/html
+
+volumes:
+  mysql_data:
+  wp_data:
+
+
+
+
+
+1.docker pull reids
+2.docker run --name my-redis -d redis
+3.docker ps
+4.docker exec -it my-redis redis-cli (opens cli)
+  4.1. SET name "Alice"
+  4.2. GET name
+  4.3. exit
+5. docker stop my-redis
+6.docker start my-redis
+7. docker rm my-redis
+8. docker rmi redis
+
+
+docker file:
+FROM redis:latest
+CMD["redis-server"]
+
+docker build -t redisnew .
+docker run --name myredisnew -d redisnew
+docker ps
+docker stop myredisnew
+docker login
+docker ps -a
+docker commit <cont_id> dockerhub_id/redis1
+docker push docker_id/redis1
+docker rm <cont_id>
+docker rmi dockerid/redis1
+docker logout
+docker pull dockerid/redis1
+docker run --name myredis -d dockerid/redis1
+docker exec -it myredis redis-cli (same as above)
+(next docker stop and rm )
+
+
+
+
+
+
+
+
+#!/bin/bash
+# ================================
+# Git & GitHub Commands for Smart Assessment Hub
+# Replace placeholders like <your-name>, <your-email>, <branch-name>, <repo-url>
+# ================================
+
+# 1. Configure Git
+git config --global user.name "<your-name>"
+git config --global user.email "<your-email>"
+
+# 2. Initialize Git in project
+cd /path/to/Smart-Assessment-Hub
+git init
+
+# 3. Add all files and commit
+git add .
+git commit -m "Added automated grading module"
+
+# 4. Check status
+git status
+
+# 5. View commit history with author details
+git log --pretty=fuller
+
+# 6. Create a new branch
+git checkout -b <feedback-module-branch>
+
+# 7. Merge branch into main (resolve conflicts if any)
+git checkout main
+git merge <feedback-module-branch>
+# If conflicts occur, manually resolve, then:
+git add .
+git commit -m "Resolved merge conflict"
+
+# 8. Resolve merge conflict with another branch
+git checkout main
+git merge <report-module-branch>
+# Resolve conflicts manually
+git add .
+git commit -m "Resolved merge conflict with report-module"
+
+# 9. Create a patch file for last commit
+git format-patch -1 <commit_id>
+
+# 10. Apply a patch file
+git apply <patchfile.patch>
+
+# 11. Push branch to GitHub
+git remote add origin https://github.com/<your-username>/<repo-name>.git
+git push -u origin <branch-name>
+
+# 12. Fork & pull request workflow (manual steps also required on GitHub)
+git clone https://github.com/<your-username>/<forked-repo>.git
+cd <forked-repo>
+git checkout -b <new-feature-branch>
+git add .
+git commit -m "Implemented new feature"
+git push origin <new-feature-branch>
+# Then create Pull Request on GitHub UI
+
+# 13. Check differences between local branch and remote main
+git fetch origin
+git diff main origin/main
+
+
+
+
+
+git status
+git restore <file>
+git restore --staged <file>
+git commit -m "msg"
+git commit --amend
+git log
+git log --oneline
+git diff
+git diff --staged
+git show <commit>
+git branch
+git branch <name>
+git branch -d <name>
+git switch <branch>
+git switch -c <branch>
+git checkout <branch>
+git merge <branch>
+git rebase <branch>
+git rebase --continue
+git rebase --abort
+git reset <file>
+git reset --soft <commit>
+git reset --mixed <commit>
+git reset --hard <commit>
+git revert <commit>
+git stash
+git stash pop
+git stash list
+git stash drop
+git tag
+git tag <name>
+git tag -d <name>
+git cherry-pick <commit>
+git clean -f
+git show HEAD
+git blame <file>
